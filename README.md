@@ -7,12 +7,13 @@ Windows:
 source_path\deliver\gradlew.bat bootRun
 
 2. Request for http://localhost:8080/... to some available endpoint with data:
-- "./util/read" + "?name=myvalue"
-- "./util/delete" + "?name=myvalue"
-- "./util/create" + "?name=myvalue"
-- "./util/update" + "?name=myvalue"
+- "./util/read" + "?id=myvalue"
+
+Others with header-based data:
+- (DELETE) "./util/delete" + id
+- (POST) "./util/create" + ProductOrder("product","location","date")
+- (PUT) "./util/update" + ProductOrder("product","location","date")
 
 TODO:
-- implement Spring JPA
-- configure MySQL database connection
-- realize rest api for project
+- configure existing H2 database connection
+- realize other missing api for project
