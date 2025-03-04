@@ -10,29 +10,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping(value="/util")
-public class CrudData {
+public class DataController {
 	@Autowired DataRepository datautil;
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ProductOrder CreateData(ProductOrder order) {
-		return datautil.save(order);
+    public String CreateData(ProductOrder order) {
+		if(order != null){
+			datautil.save(order);
+			return "Done successfuly";
+		}
+		return "Data error";
     }
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public void DeleteData(ProductOrder order) {
-		datautil.delete(order);
+    public String DeleteData(long id) {
+		if (!datautil.existsById(id)){
+			return "Data error";
+		}
+		ProductOrder prop = datautil.findById(id);
+		datautil.delete(prop);
+		return "Done successfuly";
     }
 	
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ProductOrder UpdateData(ProductOrder order, long id) {
-		if (datautil.existsById(id)){
-			return datautil.save(order);
+		if (order == null || !datautil.existsById(id)){
+			return order;
 		}
-		return order;
-    }
+		ProductOrder prop = datautil.findById(id);
+		prop.setProduct(order.getProduct());
+		prop.setLocation(order.getLocation());
+		prop.setDate(order.getDate());
+		return datautil.save(prop);
+	}
 	
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
-    public ProductOrder ReadData(long id) {
-		return datautil.findById(id);
+    public Object ReadData(long id) {
+		if (datautil.existsById(id)){
+			return datautil.findById(id);
+		}
+		return "Data error";
     }
 	
 }

@@ -36,5 +36,14 @@ public class ProductOrder {
 	public String getDate(){
 		return date;
 	}
+	public void setProduct(String product){
+		this.product = product;
+	}
+	public void setLocation(String location){
+		this.location = location;
+	}
+	public void setDate(String date){
+		this.date = date;
+	}
 	
 }
